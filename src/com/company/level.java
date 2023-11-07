@@ -27,9 +27,9 @@ public class level {
         node1.board[3][3] = '#';
         node1.board[3][4] = '#';
 
-        node1.cubes.add(new cube('=',2,3,true));
-        node1.cubes.add(new cube('1',3,2,true));
-        node1.cubes.add(new cube('1',3,4,true));
+        node1.cubes.add(new cube("=",2,3,true));
+        node1.cubes.add(new cube("1",3,2,true));
+        node1.cubes.add(new cube("1",3,4,true));
 
         return node1;
     }

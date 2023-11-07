@@ -6,11 +6,11 @@ import java.util.Comparator;
 
 public class cube {
 
-    char content;
+    String content;
     Pair< Integer , Integer > position;
     boolean moving;
 
-    public cube(char content , int position_x , int position_y , boolean moving){
+    public cube(String content , int position_x , int position_y , boolean moving){
 
         this.content = content ;
         position = new Pair<Integer, Integer>(position_x,position_y);
