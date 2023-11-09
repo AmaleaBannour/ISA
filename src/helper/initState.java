@@ -1,9 +1,5 @@
 package helper;
 
-import javafx.geometry.Pos;
-
-import java.util.ArrayList;
-
 public class initState {
     // #: wall , $: goal cube , ' ': empty cube, otherwise all is number
     public static Node[][] leve1 = {

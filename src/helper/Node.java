@@ -2,8 +2,8 @@ package helper;
 
 public class Node {
     String content;
-    Position position;
-    boolean canMove;
+    final Position position;
+    final boolean canMove;
     boolean isGoalNode;
 
     public Node(String content, int x, int y, boolean canMove, boolean isGoalNode) {
