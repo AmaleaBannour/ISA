@@ -1,12 +1,12 @@
 package helper;
 
-public class Node {
+public class Cube {
     String content;
     final Position position;
     boolean canMove;
     final boolean isGoalNode;
 
-    public Node(String content, int x, int y, boolean canMove, boolean isGoalNode) {
+    public Cube(String content, int x, int y, boolean canMove, boolean isGoalNode) {
         this.content = content;
         this.position = new Position(x, y);
         this.canMove = canMove;
@@ -45,5 +45,13 @@ public class Node {
                 ", canMove=" + canMove +
                 ", isGoalNode=" + isGoalNode +
                 '}';
+    }
+
+    public Cube deepCopy() {
+        String newContent = getContent();
+        Position position = new Position(getPosition().x, getPosition().y);
+        boolean canMove = isCanMove();
+        boolean isGoalNode = isGoalNode();
+        return new Cube(newContent, position.x, position.y, canMove, isGoalNode);
     }
 }
