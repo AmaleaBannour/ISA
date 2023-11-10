@@ -1,13 +1,6 @@
 package game;
 
-import helper.Position;
-
-import java.util.List;
+import helper.Node;
 
 public class State {
-
-//    List<Position> checkMoves() {
-//        //create empty arrayList
-//        //
-//    }
 }
