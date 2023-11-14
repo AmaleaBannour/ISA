@@ -4,10 +4,15 @@ package game;
 import helper.Cube;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class State {
     ArrayList<Cube> cubeSolutions = new ArrayList<>();
     Cube[][] level;
+
+    public State() {
+
+    }
 
     public State(Cube[][] level) {
         this.level = level;
@@ -20,17 +25,63 @@ public class State {
     }
 
     boolean isFinal() {
-        return true;
-    }
-
-    void findSolutions() {
-        for (Cube[] cubes : level) {
-            for (Cube cube : cubes) {
-                if (cube.isGoalNode()) {
-                    cubeSolutions.add(cube);
+        for (Cube cube : cubeSolutions){
+            if (cube.getContent() == "$")
+                return false;
+        }
+        ArrayList<Cube> mathematicalOperation = new ArrayList<Cube>();
+        ArrayList<Boolean> cubeVisit = new ArrayList<Boolean>(Collections.nCopies(cubeSolutions.size(),false));
+        for(int i=0; i<cubeSolutions.size(); i++){
+            if (mathematicalOperation.isEmpty()
+                    && cubeSolutions.get(i).getPosition().getX() == cubeSolutions.get(i+1).getPosition().getX()
+                    && cubeSolutions.get(i).getPosition().getY() == cubeSolutions.get(i+1).getPosition().getY()-1
+            ){
+                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                mathematicalOperation.add(cubeSolutions.get(i));
+                cubeVisit.set(i,true);
+                mathematicalOperation.add(cubeSolutions.get(i+1));
+                cubeVisit.set(i+1,true);
+                i++;
+                continue;
+            }
+            if(mathematicalOperation.get(mathematicalOperation.size()-1).getPosition().getX() == cubeSolutions.get(i).getPosition().getX()
+                    && mathematicalOperation.get(mathematicalOperation.size()-1).getPosition().getY() == cubeSolutions.get(i).getPosition().getY()+1
+            ){
+                mathematicalOperation.add(cubeSolutions.get(i));
+                cubeVisit.set(i,true);
+            }else {
+                if (checkMathematicalOperation(mathematicalOperation)){
+                    mathematicalOperation.clear();
+                    continue;
+                } else {
+                    return false;
                 }
             }
         }
+        for(int i=0; i<cubeSolutions.size(); i++){
+            System.out.println("toooooooooooooooooooooooooooooooooooooooooooooooooooooooooooh");
+            if (cubeVisit.get(i) == false && mathematicalOperation.isEmpty()){
+                mathematicalOperation.add(cubeSolutions.get(i));
+                cubeVisit.set(i,true);
+            }
+            if(mathematicalOperation.get(mathematicalOperation.size()-1).getPosition().getY() == cubeSolutions.get(i).getPosition().getY()
+                    && mathematicalOperation.get(mathematicalOperation.size()-1).getPosition().getX() == cubeSolutions.get(i).getPosition().getX()-1
+            ){
+                mathematicalOperation.add(cubeSolutions.get(i));
+                cubeVisit.set(i,true);
+            }
+        }
+        if (checkMathematicalOperation(mathematicalOperation)){
+            mathematicalOperation.clear();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    boolean checkMathematicalOperation (ArrayList<Cube> cubes){
+
+        return true;
     }
 
     State deepCopy() {
@@ -45,5 +96,24 @@ public class State {
             }
         }
         return new State(copySolutions, copyLevel);
+    }
+
+    void findSolutions() {
+        for (Cube[] cubes : level) {
+            for (Cube cube : cubes) {
+                if (cube.isGoalNode()) {
+                    cubeSolutions.add(cube);
+                }
+            }
+        }
+    }
+
+    static void print(Cube[][] bord){
+        for (Cube[] cubes : bord) {
+            for (Cube cube : cubes) {
+                System.out.print(" " + cube.getContent() + " ");
+            }
+            System.out.println("");
+        }
     }
 }
