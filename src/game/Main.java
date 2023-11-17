@@ -5,7 +5,7 @@ import helper.initState;
 public class Main {
     public static void main(String[] args) {
         State s = new State(initState.level1);
-        System.out.println(s.isFinal());
+        System.out.println(s.cubeSolutions.get(0));
 
 //        State state  = new State();
 //        Logic logic = new Logic();

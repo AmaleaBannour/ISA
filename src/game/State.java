@@ -2,13 +2,16 @@ package game;
 
 
 import helper.Cube;
+import helper.Node;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class State {
-    ArrayList<Cube> cubeSolutions = new ArrayList<>();
+
     Cube[][] level;
+    Node node ;
+    ArrayList<Cube> cubeSolutions = new ArrayList<>();
 
     public State() {
 
@@ -16,12 +19,22 @@ public class State {
 
     public State(Cube[][] level) {
         this.level = level;
+        node.setParent(null);
+        node.setCost(0);
+        node.setMoveCube(null);
+        node.setDisPosition(null);
         findSolutions();
     }
 
     public State(ArrayList<Cube> cubeSolutions, Cube[][] level) {
         this.cubeSolutions = cubeSolutions;
         this.level = level;
+    }
+
+    public State(ArrayList<Cube> cubeSolutions, Cube[][] level, Node node) {
+        this.cubeSolutions = cubeSolutions;
+        this.level = level;
+        this.node = node;
     }
 
     boolean isFinal() {
@@ -80,8 +93,7 @@ public class State {
     }
 
     boolean checkMathematicalOperation (ArrayList<Cube> cubes){
-
-        return true;
+        return false;
     }
 
     State deepCopy() {
@@ -95,7 +107,7 @@ public class State {
                 copyLevel[i][j] = level[i][j].deepCopy();
             }
         }
-        return new State(copySolutions, copyLevel);
+        return new State(copySolutions, copyLevel, node.deepCopy());
     }
 
     void findSolutions() {
