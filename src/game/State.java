@@ -11,6 +11,7 @@ public class State {
 
     Cube[][] level;
     Node node ;
+    String hashState;
     ArrayList<Cube> cubeSolutions = new ArrayList<>();
 
     public State() {
@@ -49,7 +50,6 @@ public class State {
                     && cubeSolutions.get(i).getPosition().getX() == cubeSolutions.get(i+1).getPosition().getX()
                     && cubeSolutions.get(i).getPosition().getY() == cubeSolutions.get(i+1).getPosition().getY()-1
             ){
-                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                 mathematicalOperation.add(cubeSolutions.get(i));
                 cubeVisit.set(i,true);
                 mathematicalOperation.add(cubeSolutions.get(i+1));
@@ -72,7 +72,6 @@ public class State {
             }
         }
         for(int i=0; i<cubeSolutions.size(); i++){
-            System.out.println("toooooooooooooooooooooooooooooooooooooooooooooooooooooooooooh");
             if (cubeVisit.get(i) == false && mathematicalOperation.isEmpty()){
                 mathematicalOperation.add(cubeSolutions.get(i));
                 cubeVisit.set(i,true);
@@ -110,9 +109,17 @@ public class State {
         return new State(copySolutions, copyLevel, node.deepCopy());
     }
 
+    boolean equal(State state) {
+        if (state.hashState.equals(hashState) && state.node.getParent().hashState.equals(node.getParent().hashState))
+            return true;
+        else
+            return false;
+    }
+
     void findSolutions() {
         for (Cube[] cubes : level) {
             for (Cube cube : cubes) {
+                hashState = hashState.concat(cube.getContent());
                 if (cube.isGoalNode()) {
                     cubeSolutions.add(cube);
                 }
@@ -120,8 +127,8 @@ public class State {
         }
     }
 
-    static void print(Cube[][] bord){
-        for (Cube[] cubes : bord) {
+     void print(){
+        for (Cube[] cubes : level) {
             for (Cube cube : cubes) {
                 System.out.print(" " + cube.getContent() + " ");
             }
